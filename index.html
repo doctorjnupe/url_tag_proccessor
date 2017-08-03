@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Title Scraper and validator">
+    <meta name="author" content="doctorjnupe">
+
+    <title>URL Title Scraper</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" media="screen" href="css/jumbotron.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">URL Title Scraper</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <p>Use the link to search for a URL. The content of the title tag will be displayed after the URL has been validated.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <form role="form" name="url_info" id="url_info" action="">
+        <fieldset>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="required"><strong>URL:</strong></lable>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-check"></i>
+                  </div>
+                  <input type="text" class="form-control"  id="url_name" placeholder="Enter Valid URL here" name="url_name" style="width: 100%;" required><span id="url-status"></span>
+                </div>
+                <p><img src="img/ajax-loader.gif" id="ajaxloaderIcon" style="display:none" /></p>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-md-6">
+              <span id="url-title-msg"></span>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+          <div class="form-actions">
+            <p><img src="img/loading.gif" id="loaderIcon" style="display:none" /></p>
+						<button class="btn btn-primary btn-lg" name="submit" id="submit" type="submit">
+							<i class="fa fa-share-square-o"></i>
+							Submit
+						</button>
+          </div>
+        </fieldset>
+      </form>
+      <!-- /.form  -->
+
+
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2017 Doctorjnupe</p>
+      </footer>
+    </div>
+     <!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script   src="http://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-3.2.1.min.js"><\/script>')</script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		<script>
+			if (!window.jQuery.ui) {
+				document.write('<script src="<?php echo ASSETS_URL; ?>/js/libs/jquery-ui-1.12.1.min.js"><\/script>');
+			}
+		</script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("#ajaxloaderIcon").hide();
+        $('#url_name').blur(function(){
+          var url_name = $("#url_name").val();
+          if(url_name){
+              $("#loaderIcon").show();
+              $.ajax({
+                  url: 'server/url_valid.php',
+                  data: {url_name: url_name},
+                  type: "POST",
+                  success:function(data){
+                     $("#url-status").html(data);
+                     $("#ajaxloaderIcon").hide();
+                  },
+             error:function (){}
+             });
+           }
+         });
+       });
+
+       $(document).ready(function(){
+       $("#loaderIcon").hide();
+         $('#submit').click(function(){
+           var url_name = $("#url_name").val();
+           if(clli_code){
+               $("#loaderIcon").show();
+               $.ajax({
+                   url: 'server/check_title_tag.php',
+                   data: {url_name: url_name},
+                   type: "POST",
+                   success:function(data){
+                      $("#url-title-msg").html(data);
+                      $("#loaderIcon").hide();
+                   },
+              error:function (){}
+              });
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
