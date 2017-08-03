@@ -1,6 +1,6 @@
 <?php
 
-if(!empty($_POST['url_name']){
+if(!empty($_POST['url_name'])) {
 
   $url = $_POST['url_name'];
 
