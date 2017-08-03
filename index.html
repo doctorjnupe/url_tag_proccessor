@@ -122,7 +122,7 @@
         $('#url_name').blur(function(){
           var url_name = $("#url_name").val();
           if(url_name){
-              $("#loaderIcon").show();
+              $("#ajaxloaderIcon").show();
               $.ajax({
                   url: 'server/url_valid.php',
                   data: {url_name: url_name},
@@ -137,11 +137,12 @@
          });
        });
 
-       $(document).ready(function(){
+       $(document).ready(function(e){
+       e.preventDefault();
        $("#loaderIcon").hide();
-         $('#submit').click(function(){
+         $("button").click(function(){
            var url_name = $("#url_name").val();
-           if(clli_code){
+           if(url_name){
                $("#loaderIcon").show();
                $.ajax({
                    url: 'server/check_title_tag.php',
