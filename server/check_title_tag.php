@@ -6,7 +6,7 @@
       $data = file_get_contents($url);
       $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
       $tags = get_meta_tags($url);
-        return $tags['title'];
+        return $title;
     }
 
    if (!empty(getTitle($url))){
