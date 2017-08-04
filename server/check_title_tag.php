@@ -5,9 +5,13 @@
     function getTitle($url) {
       $data = file_get_contents($url);
       $title = preg_match('/<title[^>]*>(.*?)<\/title>/', $data, $matches) ? $matches[1] : null;
-      if (empty($title)){
-        $tags = get_meta_tags($url);
-        $title = $tags["title"];
+      if (empty($title) || $title == null){
+        $tag = get_meta_tags($url);
+        $page=file_get_contents($url);
+        $titleStart=strpos($page,'<title>')+7;
+        $titleLength=strpos($page,'</title>')-$titleStart;
+        $tag['title']=substr($page,$titleStart,$titleLength);
+        $title = $tags;
 
       }
 
