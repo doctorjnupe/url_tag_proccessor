@@ -4,8 +4,13 @@
     $url = $_POST['url_name'];
     function getTitle($url) {
       $data = file_get_contents($url);
-      $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
-      $tags = get_meta_tags($url);
+      $title = preg_match('/<title[^>]*>(.*?)<\/title>/', $data, $matches) ? $matches[1] : null;
+      if (empty($title)){
+        $tags = get_meta_tags($url);
+        $title = $tags["title"];
+
+      }
+
         return $title;
     }
 
