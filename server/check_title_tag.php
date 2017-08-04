@@ -10,9 +10,9 @@
 
    if (!empty(getTitle($url))){
      $titles =  getTitle($url);
-     echo "<span class='status-available'> $titles </span>"
+     echo "<span class='status-available'> $titles </span>";
    } else {
-     echo "<span class='status-not-available'> $url.: Title is not available. </span>"
+     echo "<span class='status-not-available'> $url.: Title is not available. </span>";
    }
   }
 ?>
