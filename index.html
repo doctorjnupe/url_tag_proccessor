@@ -135,26 +135,29 @@
              });
            }
          });
+
+         $("#loaderIcon").hide();
+           $("#url_info").on('submit', function (e) {
+             e.preventDefault();
+             var url_name = $("#url_name").val();
+             if(url_name){
+                 $("#loaderIcon").show();
+                 $.ajax({
+                     url: 'server/check_title_tag.php',
+                     data: {url_name: url_name},
+                     type: "POST",
+                     success:function(data){
+                        $("#url-title-msg").html(data);
+                        $("#loaderIcon").hide();
+                     },
+                error:function (){}
+                });
+              }
+            });
        });
 
        $(document).ready(function(){
-       $("#loaderIcon").hide();
-         $("button").click(function(){
-           var url_name = $("#url_name").val();
-           if(url_name){
-               $("#loaderIcon").show();
-               $.ajax({
-                   url: 'server/check_title_tag.php',
-                   data: {url_name: url_name},
-                   type: "POST",
-                   success:function(data){
-                      $("#url-title-msg").html(data);
-                      $("#loaderIcon").hide();
-                   },
-              error:function (){}
-              });
-            }
-          });
+
         });
     </script>
   </body>
